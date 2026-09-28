@@ -99,5 +99,13 @@
   });
 })();
 </script>
+<script>
+// Anonymous pageview ping -> Google Form -> Sheet (captures referrer for traffic-source attribution)
+try {
+  var pv = new URLSearchParams();
+  pv.append('entry.518306122', 'pv | ref: ' + (document.referrer || 'direct') + ' | ' + location.pathname);
+  fetch('https://docs.google.com/forms/d/e/1FAIpQLSdhnWtUhhno57UCnvAwGNgoDRJZ6Taj3Ol-1bVijIS9Dk1b7Q/formResponse', { method:'POST', mode:'no-cors', body: pv.toString() });
+} catch(e) {}
+</script>
 </body>
 </html>
