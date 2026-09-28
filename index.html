@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GradeSheet AI - Know who actually did the work</title>
+<meta name="description" content="GradeSheet AI reads the sheets your club already keeps and scores every member's real contribution. Fair weekly leaderboards, free-rider flags, no more Sunday Excel sessions.">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; background:#0b0f1a; color:#e8ecf4; line-height:1.6; }
+  .wrap { max-width:760px; margin:0 auto; padding:0 24px; }
+  header { padding:28px 0 0; }
+  .logo { font-weight:700; font-size:20px; letter-spacing:-0.3px; }
+  .logo span { color:#7c8cf8; }
+  .hero { padding:72px 0 40px; }
+  .tag { display:inline-block; font-size:13px; color:#9aa7ff; background:rgba(124,140,248,.12); border:1px solid rgba(124,140,248,.35); padding:4px 12px; border-radius:999px; margin-bottom:20px; }
+  h1 { font-size:42px; line-height:1.15; letter-spacing:-1px; margin-bottom:18px; }
+  h1 em { font-style:normal; color:#7c8cf8; }
+  .sub { font-size:18px; color:#aab3c5; max-width:600px; margin-bottom:36px; }
+  form.waitlist { display:flex; gap:10px; max-width:520px; flex-wrap:wrap; }
+  input[type=email] { flex:1; min-width:240px; padding:14px 16px; border-radius:10px; border:1px solid #2a3350; background:#131a2c; color:#e8ecf4; font-size:16px; outline:none; }
+  input[type=email]:focus { border-color:#7c8cf8; }
+  button { padding:14px 26px; border-radius:10px; border:none; background:#5b6ef5; color:#fff; font-size:16px; font-weight:600; cursor:pointer; }
+  button:hover { background:#6d7ef7; }
+  .note { font-size:13px; color:#7d879c; margin-top:12px; }
+  .success { display:none; background:rgba(60,200,140,.12); border:1px solid rgba(60,200,140,.4); color:#7fe7b8; padding:16px 18px; border-radius:10px; max-width:520px; font-size:15px; }
+  .error { display:none; color:#ff9d9d; font-size:14px; margin-top:10px; }
+  section { padding:44px 0; border-top:1px solid #1b2338; }
+  h2 { font-size:24px; letter-spacing:-0.5px; margin-bottom:22px; }
+  .steps { display:grid; gap:14px; }
+  .step { background:#111830; border:1px solid #1e2742; border-radius:12px; padding:18px 20px; }
+  .step b { display:block; margin-bottom:4px; font-size:16px; }
+  .step p { color:#aab3c5; font-size:15px; }
+  .who { color:#aab3c5; font-size:16px; max-width:620px; }
+  .who b { color:#e8ecf4; }
+  footer { padding:28px 0 44px; color:#7d879c; font-size:13px; border-top:1px solid #1b2338; }
+  a { color:#8fa0ff; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><div class="logo">GradeSheet<span>AI</span></div></header>
+
+  <div class="hero">
+    <div class="tag">Early access opens soon</div>
+    <h1>Know who <em>actually</em> did the work.</h1>
+    <p class="sub">GradeSheet AI reads the sheets your club already keeps and scores every member's real contribution. Fair weekly leaderboards, free-rider flags, and no more Sunday Excel sessions.</p>
+    <form class="waitlist" id="waitlistForm" novalidate>
+      <input type="email" id="email" name="email" placeholder="you@college.edu" required autocomplete="email">
+      <button type="submit" id="submitBtn">Get early access</button>
+    </form>
+    <div class="success" id="successMsg">You're on the list. We'll email you the moment early access opens - bring your messiest sheet.</div>
+    <div class="error" id="errorMsg">That doesn't look like an email. Try again?</div>
+    <p class="note">Free during early access. We only email you about the launch.</p>
+  </div>
+
+  <section>
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="step"><b>1. Upload the sheet you already keep</b><p>Member names, tasks, submissions - the same Excel or Google Sheet your club uses today. No new system to learn.</p></div>
+      <div class="step"><b>2. AI scores every contribution</b><p>Each member's work is read and scored on consistent criteria, so the loudest voice in the group chat stops outranking actual work.</p></div>
+      <div class="step"><b>3. Get the leaderboard and the flags</b><p>A weekly leaderboard your whole club trusts, plus quiet flags on who contributed nothing - before the fest, not after.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Who it's for</h2>
+    <p class="who">Built for <b>club heads, society presidents, fest team leads and community managers</b> who run teams of 10-200 volunteers and currently judge contribution by memory, gut feel, and whoever replies fastest on WhatsApp.</p>
+  </section>
+
+  <footer>
+    GradeSheet AI · Early access opening soon · Questions or want to try it on your club's sheet first? Reply to your confirmation email.
+  </footer>
+</div>
+
+<script>
+(function(){
+  var FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSeV75zNUVKkOeSsRGCxUPZe7QqHvQtXY8i9mZXi39XVsm5_DQ/formResponse';
+  var ENTRY = 'entry.1440138419';
+  var form = document.getElementById('waitlistForm');
+  var email = document.getElementById('email');
+  var btn = document.getElementById('submitBtn');
+  var ok = document.getElementById('successMsg');
+  var err = document.getElementById('errorMsg');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var v = (email.value || '').trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { err.style.display='block'; ok.style.display='none'; return; }
+    err.style.display='none';
+    btn.disabled = true; btn.textContent = 'Joining...';
+    var body = new URLSearchParams();
+    body.append(ENTRY, v);
+    fetch(FORM_ACTION, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: body.toString() })
+      .catch(function(){})
+      .finally(function(){
+        form.style.display='none';
+        ok.style.display='block';
+      });
+  });
+})();
+</script>
+</body>
+</html>
