@@ -6,35 +6,45 @@
 <title>GradeSheet AI - Know who actually did the work</title>
 <meta name="description" content="GradeSheet AI scores every group project member's real contribution, so your grade reflects what you actually did - not the team's average. Free-rider flags for students, defensible per-member grades for professors.">
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; background:#0b0f1a; color:#e8ecf4; line-height:1.6; }
-  .wrap { max-width:760px; margin:0 auto; padding:0 24px; }
-  header { padding:28px 0 0; }
-  .logo { font-weight:700; font-size:20px; letter-spacing:-0.3px; }
-  .logo span { color:#7c8cf8; }
-  .hero { padding:72px 0 40px; }
-  .tag { display:inline-block; font-size:13px; color:#9aa7ff; background:rgba(124,140,248,.12); border:1px solid rgba(124,140,248,.35); padding:4px 12px; border-radius:999px; margin-bottom:20px; }
-  h1 { font-size:42px; line-height:1.15; letter-spacing:-1px; margin-bottom:18px; }
-  h1 em { font-style:normal; color:#7c8cf8; }
-  .sub { font-size:18px; color:#aab3c5; max-width:600px; margin-bottom:36px; }
-  form.waitlist { display:flex; gap:10px; max-width:520px; flex-wrap:wrap; }
-  input[type=email] { flex:1; min-width:240px; padding:14px 16px; border-radius:10px; border:1px solid #2a3350; background:#131a2c; color:#e8ecf4; font-size:16px; outline:none; }
-  input[type=email]:focus { border-color:#7c8cf8; }
-  button { padding:14px 26px; border-radius:10px; border:none; background:#5b6ef5; color:#fff; font-size:16px; font-weight:600; cursor:pointer; }
-  button:hover { background:#6d7ef7; }
-  .note { font-size:13px; color:#7d879c; margin-top:12px; }
-  .success { display:none; background:rgba(60,200,140,.12); border:1px solid rgba(60,200,140,.4); color:#7fe7b8; padding:16px 18px; border-radius:10px; max-width:520px; font-size:15px; }
-  .error { display:none; color:#ff9d9d; font-size:14px; margin-top:10px; }
-  section { padding:44px 0; border-top:1px solid #1b2338; }
-  h2 { font-size:24px; letter-spacing:-0.5px; margin-bottom:22px; }
-  .steps { display:grid; gap:14px; }
-  .step { background:#111830; border:1px solid #1e2742; border-radius:12px; padding:18px 20px; }
-  .step b { display:block; margin-bottom:4px; font-size:16px; }
-  .step p { color:#aab3c5; font-size:15px; }
-  .who { color:#aab3c5; font-size:16px; max-width:620px; }
-  .who b { color:#e8ecf4; }
-  footer { padding:28px 0 44px; color:#7d879c; font-size:13px; border-top:1px solid #1b2338; }
-  a { color:#8fa0ff; }
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap');
+:root { --paper:#f7f5ef; --ink:#202620; --muted:#586059; --rule:#cbd0c5; --accent:#b94e32; --accent-dark:#893921; }
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { margin:0; color:var(--ink); background:var(--paper); font:400 16px/1.6 'DM Sans',Arial,sans-serif; -webkit-font-smoothing:antialiased; }
+.wrap { max-width:1160px; margin:auto; padding:0 46px; }
+header { padding:30px 0 22px; border-bottom:1px solid var(--ink); }
+.logo { display:inline-flex; align-items:baseline; gap:6px; color:var(--ink); font-size:18px; font-weight:700; line-height:1; letter-spacing:-.055em; }
+.logo span { font:500 11px/1 'DM Sans',Arial,sans-serif; letter-spacing:.15em; color:var(--accent); }
+.hero { padding:91px 0 93px; position:relative; }
+.tag { display:block; width:max-content; margin-bottom:25px; font-size:11px; line-height:1.2; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:var(--accent-dark); }
+.tag:before { content:''; display:inline-block; width:23px; height:1px; margin:0 11px 4px 0; background:var(--accent); }
+h1,h2 { font-family:'Newsreader',Georgia,serif; font-weight:500; }
+h1 { max-width:930px; margin:0 0 30px; font-size:clamp(61px,8.4vw,112px); line-height:.98; letter-spacing:-.055em; }
+h1 em { font-weight:400; font-style:italic; color:var(--accent); }
+.sub { max-width:665px; margin:0 0 42px; font-size:19px; line-height:1.62; color:#374137; }
+form.waitlist { display:flex; width:min(100%,595px); gap:0; }
+input[type=email] { flex:1; min-width:0; height:55px; padding:0 17px; border-radius:0; border:1px solid var(--ink); border-right:none; background:#fffefa; color:var(--ink); font:400 15px 'DM Sans',Arial,sans-serif; outline:none; }
+input[type=email]:focus { box-shadow:inset 0 0 0 2px var(--accent); }
+input[type=email]::placeholder { color:#8a9188; }
+button { min-height:55px; padding:0 22px; border:1px solid var(--ink); border-radius:0; background:var(--ink); color:#fffefa; font:600 14px 'DM Sans',Arial,sans-serif; cursor:pointer; transition:background .15s ease,color .15s ease; }
+button:hover { background:var(--accent-dark); border-color:var(--accent-dark); }
+button:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+button:disabled { opacity:.6; cursor:wait; }
+.note { max-width:595px; margin:12px 0 0; font-size:12px; line-height:1.6; color:var(--muted); }
+.success { display:none; max-width:595px; padding:18px 20px; border-left:3px solid #335747; background:#e9eee4; color:#274735; font-size:15px; }
+.error { display:none; margin-top:10px; font-size:13px; color:#a43325; }
+section { display:grid; grid-template-columns:minmax(170px,230px) 1fr; column-gap:50px; padding:42px 0 60px; border-top:1px solid var(--ink); }
+h2 { margin:0; font-size:29px; line-height:1.12; letter-spacing:-.035em; }
+.steps { border-top:1px solid var(--rule); }
+.step { display:grid; grid-template-columns:minmax(190px, 38%) 1fr; gap:25px; padding:21px 0 25px; border-bottom:1px solid var(--rule); }
+.step b { max-width:230px; font-size:15px; line-height:1.4; font-weight:700; letter-spacing:-.025em; }
+.step p { margin:0; color:var(--muted); font-size:14px; line-height:1.7; }
+.who { max-width:670px; margin:0; font-size:17px; line-height:1.75; color:var(--muted); }
+.who b { color:var(--ink); font-weight:700; }
+footer { padding:25px 0 45px; border-top:1px solid var(--ink); color:var(--muted); font-size:12px; line-height:1.6; }
+a { color:var(--accent-dark); }
+@media(max-width:750px) { .wrap{padding:0 24px} header{padding:24px 0 19px} .hero{padding:78px 0 75px} h1{font-size:clamp(57px,12.8vw,88px)} .sub{font-size:17px} section{display:block;padding:34px 0 50px} h2{margin:0 0 25px} .step{grid-template-columns:1fr;gap:4px} .step b{max-width:none} }
+@media(max-width:480px) { .wrap{padding:0 20px} .hero{padding:65px 0 66px} h1{font-size:clamp(49px,13.1vw,65px)} .tag{margin-bottom:25px} .sub{font-size:16px;margin-bottom:32px} form.waitlist{display:block} input[type=email]{display:block;width:100%;border-right:1px solid var(--ink)} button{width:100%;margin-top:9px} .who{font-size:16px} }
 </style>
 </head>
 <body>
